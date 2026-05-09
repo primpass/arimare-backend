@@ -1,0 +1,21 @@
+{
+  "name": "arimare-backend",
+  "type": "module",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Secure Anthropic proxy backend for Arimare Metaphysics",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev":   "nodemon server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk":  "latest",
+    "dotenv":             "latest",
+    "express":            "^5.2.1",
+    "express-rate-limit": "^7.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
