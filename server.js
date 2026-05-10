@@ -20,9 +20,9 @@ if (!ANTHROPIC_API_KEY) {
 
 const PORT   = process.env.PORT || 5000;
 const HOST   = process.env.HOST || '0.0.0.0';   // 0.0.0.0 so mobile on LAN can reach
-// Use the full versioned model ID for reliability.
-// Update this when you want to upgrade to a newer Claude release.
-const MODEL  = 'claude-sonnet-4-5-20250514';
+// Latest Claude Sonnet — best speed/intelligence balance for production
+// Docs: https://docs.anthropic.com/en/docs/about-claude/models/overview
+const MODEL  = 'claude-sonnet-4-6';
 
 // ─── App setup ───────────────────────────────────────────────────────────────
 const app    = express();
