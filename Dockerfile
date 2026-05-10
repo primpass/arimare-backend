@@ -3,10 +3,10 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy package files
-COPY package.json package-lock.json* ./
+COPY package.json ./
 
-# Install production deps only
-RUN npm ci --omit=dev
+# Install production deps only (no package-lock.json required)
+RUN npm install --omit=dev
 
 # Copy source
 COPY server.js ./
