@@ -123,6 +123,38 @@ app.post('/api/generate', async (req, res) => {
   }
 });
 
+// ─── POST /api/webhook/revenuecat ─────────────────────────────────────────────
+// RevenueCat sends events here when purchase is confirmed by Apple / Google
+// Dashboard: RevenueCat → Project → Integrations → Webhooks → add this URL
+// Docs: https://www.revenuecat.com/docs/webhooks
+app.post('/api/webhook/revenuecat', (req, res) => {
+  const event = req.body?.event;
+  if (!event) return res.status(400).json({ error: 'Missing event' });
+
+  const { type, app_user_id, product_id } = event;
+  console.log(`[RevenueCat] ${type} | user=${app_user_id} | product=${product_id}`);
+
+  // Credit amounts per product ID
+  const CREDIT_MAP = {
+    arimare_credit_1:  1,
+    arimare_credit_5:  5,
+    arimare_credit_15: 15,
+  };
+
+  if (type === 'INITIAL_PURCHASE' || type === 'NON_SUBSCRIPTION_PURCHASE') {
+    const credits = CREDIT_MAP[product_id];
+    if (!credits) {
+      console.warn(`[RevenueCat] Unknown product: ${product_id}`);
+      return res.json({ received: true });
+    }
+    // Credits are stored client-side (SecureStore) — webhook is for logging/analytics
+    // If you add server-side user accounts later, unlock credits here
+    console.log(`[RevenueCat] ✅ ${credits} credit(s) purchased by user ${app_user_id}`);
+  }
+
+  res.json({ received: true });
+});
+
 // ─── Start ────────────────────────────────────────────────────────────────────
 app.listen(PORT, HOST, () => {
   console.log(`✅  Arimare backend running → http://${HOST}:${PORT}`);
