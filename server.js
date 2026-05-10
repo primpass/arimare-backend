@@ -19,7 +19,7 @@ if (!ANTHROPIC_API_KEY) {
 }
 
 const PORT   = process.env.PORT || 5000;
-const HOST   = process.env.HOST || '0.0.0.0';   // 0.0.0.0 so mobile on LAN can reach
+const HOST   = '0.0.0.0';   // Always bind IPv4 — Railway healthcheck requires this
 // Latest Claude Sonnet — best speed/intelligence balance for production
 // Docs: https://docs.anthropic.com/en/docs/about-claude/models/overview
 const MODEL  = 'claude-sonnet-4-6';
